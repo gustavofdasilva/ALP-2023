@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Pressable, ScrollView } from 'react-native';
+import { Pressable, RefreshControl, ScrollView } from 'react-native';
 import { Button, Linking } from 'react-native';
 import { 
   StyleSheet, 
@@ -40,11 +40,34 @@ export default function App() {
     const changeStyle = () => {
 
     }
+
+  /*List, scrollview, refresh control*/
+  const [items,setItems] = useState([
+    {key:1,item:'Item 1'},
+    {key:2,item:'Item 2'},
+    {key:3,item:'Item 3'},
+    {key:4,item:'Item 4'},
+    {key:5,item:'Item 5'},
+    {key:6,item:'Item 6'},
+    {key:7,item:'Item 7'},
+    {key:8,item:'Item 8'},    
+  ])
+
+  const [refresh,setRefresh] = useState(false)
+
+  const onRefresh = () => {
+    setRefresh(true);
+    setItems([...items, {key:9,item:'Item 9'}])
+    setRefresh(false)
+  }
+
   
   return (
     <View style={styles.body}>
-      <ScrollView>
-
+      <ScrollView refreshControl={
+        <RefreshControl refreshing={ refresh }
+        onRefresh={onRefresh}></RefreshControl>
+      }>
       <View style={styles.divs}>
         <Text style={styles.header}>First Step</Text>
         <Text style={styles.text}>{user}</Text>
@@ -69,8 +92,131 @@ export default function App() {
         <Button title='UPDATE STATE'></Button>
       </View>
 
-      </ScrollView>
-    </View>
+      <View style={styles.divs}>
+        {
+          items.map((item)=>{
+            return (
+              <View style={{
+                flex: 1,
+                backgroundColor: '#ef0234',
+                alignItems: 'stretch',
+                justifyContent: 'space-around',
+                margin: 10,
+              }} key={item.key}>
+                <Text style={{
+                  fontSize: 50,
+                }}>{item.item}</Text>
+              </View>
+            )
+          })
+        }
+      </View>
+      
+
+      {/**FLEX UI RESPONSIBLE _ TELA INTEIRA */}
+      {/*
+        <View style={{
+          flex: 1,
+          flexDirection: 'column',
+          backgroundColor: '#FFF',
+          alignItems: 'stretch',
+          justifyContent: 'center'
+        }}>
+          <View style={{
+            backgroundColor: '#F00',
+            flex: 1,
+            alignItems: 'stretch',
+            justifyContent: 'center',
+            flexDirection: 'row'
+          }}>
+
+            <View style={{
+              backgroundColor: '#0FF',
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+              <Text style={styles.text}>1</Text>
+            </View>  
+
+            <View style={{
+              backgroundColor: '#F0F',
+              flex: 2,
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+              <Text style={styles.text}>2</Text>
+            </View> 
+
+            <View style={{
+              backgroundColor: '#FF0',
+              flex: 3,
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+              <Text style={styles.text}>3</Text>
+            </View> 
+          
+          </View>
+
+          <View style={{
+            backgroundColor: '#F0F',
+            flex: 2,
+            alignItems: 'stretch',
+            justifyContent: 'center'
+          }}>
+              <View style={{
+              backgroundColor: '#F00',
+              flex: 2,
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+              <Text style={styles.text}>4</Text>
+            </View>
+
+            <View style={{
+              backgroundColor: '#0F0',
+              flex: 2,
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+              <Text style={styles.text}>5</Text>
+            </View>
+          </View>
+
+          <View style={{
+            flex: 8,
+            backgroundColor: '#FF0',
+            flexDirection: 'row',
+            alignItems: 'stretch',
+            justifyContent: 'center'
+          }}>
+            <View style={{
+            flex: 1,
+            backgroundColor: '#FFF',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <Text style={styles.text}>6</Text>
+          </View>
+
+          <View style={{
+            flex: 1,
+            backgroundColor: '#00F',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <Text style={styles.text}>7</Text>
+          </View>
+
+          </View>
+
+        </View>
+      */}
+        </ScrollView>
+      </View>
+    
+    
   );
 }
 
@@ -95,7 +241,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#000',
     fontSize: 30,
-    padding: 50,
   },
 
   header: {
