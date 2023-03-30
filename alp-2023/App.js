@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Pressable, RefreshControl, ScrollView } from 'react-native';
+import { FlatList, Pressable, RefreshControl, ScrollView, SectionList, TextInput } from 'react-native';
 import { Button, Linking } from 'react-native';
 import { 
   StyleSheet, 
@@ -9,7 +9,7 @@ import {
 
 export default function App() {
   /*First Steps*/
-    const [user, setName] = useState('GUTAO')
+    const [user, setUser] = useState('GUTAO')
     const [session, setSession] = useState({
       number:6,
       title: 'state',
@@ -43,27 +43,163 @@ export default function App() {
 
   /*List, scrollview, refresh control*/
   const [items,setItems] = useState([
-    {key:1,item:'Item 1'},
-    {key:2,item:'Item 2'},
-    {key:3,item:'Item 3'},
-    {key:4,item:'Item 4'},
-    {key:5,item:'Item 5'},
-    {key:6,item:'Item 6'},
-    {key:7,item:'Item 7'},
-    {key:8,item:'Item 8'},    
+    {name:'item 1'},
+    {name:'item 2'},
+    {name:'item 3'},
+    {name:'item 4'},
+    {name:'item 5'},
+    {name:'item 6'},
+    {name:'item 7'},
+    {name:'item 8'},    
+    {name:'item 9'},
+    {name:'item 10'},
+    {name:'item 11'},
+    {name:'item 12'},
+    {name:'item 13'},
+    {name:'item 14'},
+    {name:'item 15'},
+    {name:'item 16'},  
   ])
+
+  const [DATA,setDATA] = useState([
+    {
+      title:'title-1',
+      data:['item1-1','item1-2'],
+    }
+  ])
+
+  const [countB,setCountB] = useState(2)
 
   const [refresh,setRefresh] = useState(false)
 
   const onRefresh = () => {
     setRefresh(true);
-    setItems([...items, {key:9,item:'Item 9'}])
+    setDATA([...DATA,
+    {
+      title:`title-${countB}`,
+      data:[`item${countB}-1`,`item${countB}-2`]
+    }
+    ])
+    setCountB(countB+1)
     setRefresh(false)
   }
 
+  const [name,setName] = useState('')
+
+
   
   return (
+
     <View style={styles.body}>
+      <Text style={{
+        color:'#fff',
+        fontSize: 30
+      }}>Please Write your name:</Text>
+      <TextInput style={{
+        backgroundColor:'#fff',
+        width: '80%',
+        borderWidth: 5,
+        borderColor: '#ABF',
+        borderRadius: 2,
+        padding: 10,
+        color: '#F00',
+        textAlign: 'center'
+      }} placeholder={'jonh'}
+      maxLength={5}
+      onChangeText={(value)=>{setName(value)}}></TextInput> 
+      <Text style={{
+        color:'#fff',
+        fontSize: 50
+      }}>Hello {name}!</Text>
+    </View>
+
+    /*<SectionList
+      sections={DATA}
+      keyExtractor={(item,index)=>index.toString()}
+      renderItem={({item})=>(
+        <View style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'space-around',
+          borderColor: '#000',
+          borderWidth: 1
+        }}>
+          <Text style={{
+            fontSize: 40,
+          }}>{item}</Text>
+        </View>
+      )}
+      renderSectionHeader={({section})=>(
+        <View style={{
+          flex: 1,
+          backgroundColor: '#ef0eee',
+          alignItems: 'center',
+          justifyContent: 'space-around',
+        }}>
+          <Text style={{
+            fontSize: 50,
+          }}>{section.title}</Text>
+        </View>
+      )}
+
+      refreshControl={
+        <RefreshControl
+          refreshing={refresh}
+          onRefresh={onRefresh}
+        ></RefreshControl>
+      }
+
+    />
+
+    /*<SectionList
+      sections={DATA}
+      keyExtractor={(item,index)=>index.toString()}
+      renderItem={({item})=>(
+          <Text style={{
+            fontSize: 50,
+          }}>{item}</Text>
+      )}
+      renderSectionHeader={({section})=>(
+        <View style={{
+          flex: 1,
+          backgroundColor: '#ef0eee',
+          alignItems: 'center',
+          justifyContent: 'space-around',
+          margin: 10,
+          marginTop: 30,
+        }}>
+          <Text style={{
+            fontSize: 50,
+          }}>{section.title}</Text>
+        </View>
+      )}
+    />
+
+    /*<FlatList
+      keyExtractor={(item,index)=>index.toString()}
+      data={items}
+      renderItem={({item})=>(
+        <View style={{
+          flex: 1,
+          backgroundColor: '#ef0234',
+          alignItems: 'center',
+          justifyContent: 'space-around',
+          margin: 10,
+        }}>
+          <Text style={{
+            fontSize: 50,
+          }}>{item.name}</Text>
+        </View>
+      )} //<-works as a map
+      refreshControl={
+        <RefreshControl 
+        refreshing={ refresh }
+        onRefresh={onRefresh}></RefreshControl>
+      }
+      />
+    
+    <View style={styles.body}>
+      
       <ScrollView refreshControl={
         <RefreshControl refreshing={ refresh }
         onRefresh={onRefresh}></RefreshControl>
@@ -113,8 +249,8 @@ export default function App() {
       </View>
       
 
-      {/**FLEX UI RESPONSIBLE _ TELA INTEIRA */}
-      {/*
+      
+      
         <View style={{
           flex: 1,
           flexDirection: 'column',
@@ -212,9 +348,9 @@ export default function App() {
           </View>
 
         </View>
-      */}
         </ScrollView>
-      </View>
+        
+      </View>*/
     
     
   );
@@ -222,9 +358,10 @@ export default function App() {
 
 const styles = StyleSheet.create({
   body: {
-    width: '100%',
-    height: '100%',
+    flex:1,
     backgroundColor: '#000',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 
   divs: {
