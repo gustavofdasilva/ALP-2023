@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import { Alert, TouchableHighlight, TouchableNativeFeedback, TouchableOpacity } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native';
 import { FlatList, Pressable, RefreshControl, ScrollView, SectionList, TextInput } from 'react-native';
 import { Button, Linking } from 'react-native';
 import { 
@@ -86,6 +88,17 @@ export default function App() {
 
   const [name,setName] = useState('')
 
+  const [submitted,setSubmitted] = useState(false)
+
+  const onPressButton = () => {
+    if(name.length>3) {
+      setSubmitted(!submitted)
+    } else {
+      Alert.alert("ERROR!","Write your name to register",[
+        {text:"OK"}
+      ])
+    }
+  }
 
   
   return (
@@ -103,14 +116,89 @@ export default function App() {
         borderRadius: 2,
         padding: 10,
         color: '#F00',
-        textAlign: 'center'
+        textAlign: 'center',
+        margin: 10
       }} placeholder={'jonh'}
       maxLength={5}
       onChangeText={(value)=>{setName(value)}}></TextInput> 
-      <Text style={{
-        color:'#fff',
-        fontSize: 50
-      }}>Hello {name}!</Text>
+
+      {/*<Button title={submitted?"Clear":"Submit"} onPress={()=>{
+        onPressButton()
+      }} color={'#F0F'}/>*/}
+
+      <TouchableOpacity
+      onPress={onPressButton}
+      style={{
+        backgroundColor:"#F0F",
+        padding: 10,
+        width: '40%',
+        textAlign:"center",
+        borderRadius:5
+      }}
+      activeOpacity={0.5}>
+        <Text style={{
+          color:"#FFF",
+          fontSize:20
+        }}>{submitted?"Clear":"Submit"}</Text>
+      </TouchableOpacity>
+
+      <TouchableHighlight
+      onPress={onPressButton}
+      style={{
+        backgroundColor:"#F0F",
+        padding: 10,
+        width: '40%',
+        textAlign:"center",
+        borderRadius:5
+      }}
+      underlayColor={'#0F0'}>
+        <Text style={{
+          color:"#FFF",
+          fontSize:20
+        }}>{submitted?"Clear":"Submit"}</Text>
+      </TouchableHighlight>
+
+      <TouchableWithoutFeedback
+      onPress={onPressButton}>
+        <View style={{
+        backgroundColor:"#F0F",
+        padding: 10,
+        width: '40%',
+        textAlign:"center",
+        borderRadius:5
+      }}>
+          <Text style={{
+            color:"#FFF",
+            fontSize:20
+          }}>{submitted?"Clear":"Submit"}</Text>
+        </View>
+      </TouchableWithoutFeedback>
+
+      <Pressable
+      onPress={onPressButton}
+      hitSlop={{top:10,bottom:10,left:10,right:10}}
+      android_ripple={"#F00"}
+      style={({pressed})=>[{
+        backgroundColor: pressed?"#888":"#F0F",
+        padding: 10,
+        width: '40%',
+        textAlign:"center",
+        borderRadius:5
+      }]}>
+        <Text style={{
+            color:"#FFF",
+            fontSize:20
+          }}>{submitted?"Clear":"Submit"}</Text>
+      </Pressable>
+
+      {submitted ?
+        <Text style={{
+          color:'#fff',
+          fontSize: 30
+        }}>You are submitted! Hello {name}!</Text>
+      :
+        null
+      }
     </View>
 
     /*<SectionList
