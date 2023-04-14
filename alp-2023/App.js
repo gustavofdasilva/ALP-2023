@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import { Alert, TouchableHighlight, TouchableNativeFeedback, TouchableOpacity } from 'react-native';
+import { Alert, Image, Modal, ToastAndroid, TouchableHighlight, TouchableNativeFeedback, TouchableOpacity } from 'react-native';
+import { ImageBackground } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native';
 import { FlatList, Pressable, RefreshControl, ScrollView, SectionList, TextInput } from 'react-native';
 import { Button, Linking } from 'react-native';
@@ -94,16 +95,89 @@ export default function App() {
     if(name.length>3) {
       setSubmitted(!submitted)
     } else {
-      Alert.alert("ERROR!","Write your name to register",[
-        {text:"OK"}
-      ])
+      //Alert
+      /*Alert.alert("ERROR!","Write your name to register",[
+        {text:"OK", onPress:()=>{console.warn('OK Pressed!')}},
+        {text:"Test name", onPress:()=>{console.warn("Name")}},
+        {text:"Cancel", onPress:()=>{console.warn("Cancelled")}}
+      ],{cancelable:true, onDismiss:()=>{console.warn("cancel")}})*/
+
+      //Toast - only in android
+      /*ToastAndroid.show(
+        "Message",
+        ToastAndroid.LONG
+        )*/
+      
+        setShowWarning(true)
     }
   }
+
+  const [showWarning,setShowWarning] = useState(false)
 
   
   return (
 
-    <View style={styles.body}>
+    <ImageBackground style={styles.body} 
+    source={{uri:'https://wallpaperaccess.com/full/529068.jpg'}}>
+      <Modal
+        visible={showWarning}
+        transparent={true}
+        onRequestClose={()=>{
+          setShowWarning(false)
+        }}
+        animationType='fade'>
+        <View 
+        style={{
+          backgroundColor:"#00000099",
+          flex: 1,
+          display:'flex',
+          alignItems:'center',
+          justifyContent:'center'
+        }}>
+          <View
+          style={{
+            backgroundColor:"#FFFFFF",
+            display:'flex',
+            alignItems:'center',
+            width: 300,
+            height: 150,
+            borderRadius: 10
+          }}>
+            <View style={{
+              backgroundColor:"#F0F",
+              justifyContent:'flex-start' ,
+              width:'100%',
+              height: 30,
+              justifyContent: 'center',
+              alignItems: 'center',
+              color: "#FFF",
+              marginBottom:20,
+              borderTopRightRadius:10,
+              borderTopLeftRadius:10,
+            }}>
+              <Text style={{color: "#FFF"}}>WARNING!</Text>
+            </View>
+            <Text style={{fontSize:20}}>Write your name to submit</Text>
+            <TouchableOpacity 
+            style={{
+              backgroundColor:"#F0F",
+              padding: 10,
+              width: '40%',
+              textAlign:"center",
+              borderRadius:5,
+              marginTop: 15
+            }}
+            onPress={()=>{
+              setShowWarning(false)
+            }}>
+              <Text style={{
+              color:"#FFF",
+              fontSize:20
+            }}>Back</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
       <Text style={{
         color:'#fff',
         fontSize: 30
@@ -192,14 +266,42 @@ export default function App() {
       </Pressable>
 
       {submitted ?
-        <Text style={{
-          color:'#fff',
-          fontSize: 30
-        }}>You are submitted! Hello {name}!</Text>
+        <View style={{
+          width: '100%',
+          justifyContent:'center',
+          alignItems:'center'
+        }}>
+          <Text style={{
+            color:'#fff',
+            fontSize: 30,
+            textAlign:'center',
+            fontWeight:'bold',
+            margin: 10
+          }}>You are submitted! Hello {name}!</Text>
+
+          <Image 
+            source={{uri:'https://vps29400.publiccloud.com.br/images/2/2e/Confirm.png'}}
+            style={{
+              width:100,
+              height:100,
+              margin: 15,
+              resizeMode: 'stretch',
+            }} blurRadius={10}/>
+        </View>
       :
-        null
+        <View>
+          <Image 
+            source={require('./assets/1022476.png')}
+            style={{
+              width:100,
+              height:100,
+              margin: 15,
+              resizeMode: 'stretch'
+            }}/>
+        </View>
+        
       }
-    </View>
+    </ImageBackground>
 
     /*<SectionList
       sections={DATA}
@@ -447,7 +549,7 @@ export default function App() {
 const styles = StyleSheet.create({
   body: {
     flex:1,
-    backgroundColor: '#000',
+    backgroundColor: '#888',
     justifyContent: 'center',
     alignItems: 'center'
   },
