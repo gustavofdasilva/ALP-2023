@@ -12,36 +12,13 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 const Tab = createMaterialBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
-export default function App() { return (
+function App() { 
+  return (
     <NavigationContainer>
       <Drawer.Navigator
-        barStyle={{
-          backgroundColor: "#F09"
-        }}
-        activeColor='#FFF'
-        inactiveColor='#000'
-        labeled={false}
-        screenOptions={({route})=>({
-          tabBarIcon:({focused, size, color}) => {
-            let iconName;
-            if(route.name === 'ScreenA') {
-              iconName='mail-outline';
-              size = 30;
-              color = focused?"#FFF":"#000";
-            } else {
-              iconName='happy-outline';
-              size = 30;
-              color = focused?"#FFF":"#000";
-            }
-            return(
-              <Ionicons
-                name={iconName}
-                size={size}
-                color={color}/>
-            )
-          },
-          
-        })}>
+        drawerType='back'
+        hideStatusBar={true}
+        >
         
           
         <Drawer.Screen
@@ -54,4 +31,5 @@ export default function App() { return (
     </NavigationContainer>
 );}
 
+export default App;
 

@@ -6,10 +6,13 @@ import {
     Pressable
   } from 'react-native';
 
-  export default function ScreenB() {
+  export default function ScreenB({route}) {
+    const {itemName, id} = route.params;
+
     return(
       <View style={styles.body}>
         <Text style={styles.text}>Screen B</Text>
+        <Text>{itemName} + {id}</Text>
       </View>
     )
   }

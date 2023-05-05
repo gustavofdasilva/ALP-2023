@@ -8,12 +8,12 @@ import {
 
   export default function ScreenA({navigation}) {
     const onPressHandler = () => {
-      navigation.navigate("ScreenB")
+      navigation.navigate("ScreenB", {itemName:"HELLO",id:12});
     }
   
     return(
       <View style={styles.body}>
-        <Text style={styles.text}>Screen A</Text>
+        <Text style={styles.text}>Screen ALALALAL</Text>
         <Pressable 
           style={styles.button}
           onPress={onPressHandler}>
