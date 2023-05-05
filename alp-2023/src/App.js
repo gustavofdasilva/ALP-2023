@@ -1,5 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -7,11 +9,18 @@ import ScreenA from './screens/screenA';
 import ScreenB from './screens/screenB';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialBottomTabNavigator();
+const Drawer = createDrawerNavigator();
 
 export default function App() { return (
     <NavigationContainer>
-      <Tab.Navigator
+      <Drawer.Navigator
+        barStyle={{
+          backgroundColor: "#F09"
+        }}
+        activeColor='#FFF'
+        inactiveColor='#000'
+        labeled={false}
         screenOptions={({route})=>({
           tabBarIcon:({focused, size, color}) => {
             let iconName;
@@ -31,19 +40,17 @@ export default function App() { return (
                 color={color}/>
             )
           },
-          tabBarActiveTintColor: '#FFF',
-          tabBarActiveBackgroundColor: '#40f'
           
         })}>
         
           
-        <Tab.Screen
+        <Drawer.Screen
           name='ScreenA'
           component={ScreenA}/>
-        <Tab.Screen
+        <Drawer.Screen
           name='ScreenB'
           component={ScreenB}/>
-      </Tab.Navigator>
+      </Drawer.Navigator>
     </NavigationContainer>
 );}
 
