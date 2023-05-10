@@ -1,33 +1,30 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import ScreenA from './screens/screenA';
-import ScreenB from './screens/screenB';
+import Home from './screens/Home';
+import Login from './screens/login';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { createStackNavigator } from '@react-navigation/stack';
 
-const Tab = createMaterialBottomTabNavigator();
-const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
 function App() { 
   return (
     <NavigationContainer>
-      <Drawer.Navigator
+      <Stack.Navigator
         drawerType='back'
         hideStatusBar={true}
         >
         
           
-        <Drawer.Screen
-          name='ScreenA'
-          component={ScreenA}/>
-        <Drawer.Screen
-          name='ScreenB'
-          component={ScreenB}/>
-      </Drawer.Navigator>
+        <Stack.Screen
+          name='Home'
+          component={Home}
+          />
+        <Stack.Screen
+          name='Login'
+          component={Login}/>
+      </Stack.Navigator>
     </NavigationContainer>
 );}
 
